@@ -13,15 +13,17 @@ class TextToSpeech:
         return voice
 
     def save(self):
+        path = './tmp/voice.ogg'
         voice = self.convert()
-        voice.save('voice.mp3')
+        voice.save(path)
+        return path
 
     def stream(self):
         pass
 
     def play_saved(self):
         try:
-            os.system('voice.mp3')
+            os.system('/tmp/voice.ogg')
         except Exception as err:
             print(err)
 
