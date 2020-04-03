@@ -1,4 +1,5 @@
 import telebot
+from text_to_speech import TextToSpeech
 
 bot = telebot.TeleBot('')
 keyboard1 = telebot.types.ReplyKeyboardMarkup()
@@ -11,6 +12,8 @@ def start_message(message):
 @bot.message_handler(content_types=['text'])
 def send_text(message):
     if message.text.lower() == 'привет':
+        tts = TextToSpeech(text='Вставай жиробас', lang='ru')
+        bot.send_voice(message.chat.id, tts.save())
         bot.send_message(message.chat.id, 'Привет, мой создатель')
     elif message.text.lower() == 'пока':
         bot.send_message(message.chat.id, 'Прощай, создатель')
