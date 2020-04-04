@@ -9,7 +9,7 @@ keyboard1.row('Привет', 'Пока')
 def start_message(message):
     bot.send_message(message.chat.id, 'Привет, ты написал мне /start', reply_markup=keyboard1)
 
-@bot.message_handler(content_types=['text'])
+@bot.message_handler(content_types=['text', 'audio', 'document'])
 def send_text(message):
     if message.text.lower() == 'привет':
         bot.send_message(message.chat.id, 'Привет')
@@ -18,11 +18,10 @@ def send_text(message):
     elif message.text.lower() == 'я тебя люблю':
         bot.send_sticker(message.chat.id, 'CAADAgADZgkAAnlc4gmfCor5YbYYRAI')
     else:
-        bot.send_message(message.chat.id, 'Привет')
         tts = TextToSpeech(text=message.text, lang='ru')
         ogg_file = tts.save()
-        bot.send_voice(message.chat.id, ogg_file)
-        bot.send_message(message.chat.id, 'Встал?')
+        with open(ogg_file, 'rb') as f:
+            bot.send_voice(message.chat.id, f)
 
 @bot.message_handler(content_types=['sticker'])
 def sticker_id(message):
